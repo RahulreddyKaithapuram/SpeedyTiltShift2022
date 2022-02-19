@@ -1,0 +1,7 @@
+Executable : C:\Users\kaith\AppData\Local\Android\Sdk\cmake\3.18.1\bin\ninja.exe
+arguments : 
+-C
+C:\Study\SpeedyTiltShift2022\app\.cxx\Debug\2i5t3z31\armeabi-v7a
+native-lib
+jvmArgs : 
+

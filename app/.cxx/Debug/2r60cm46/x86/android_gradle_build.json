@@ -1,0 +1,54 @@
+{
+  "stringTable": {},
+  "buildFiles": [
+    "C:\\Study\\SpeedyTiltShift2022\\app\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\kaith\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+      "-C",
+      "C:\\Study\\SpeedyTiltShift2022\\app\\.cxx\\Debug\\2r60cm46\\x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\kaith\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+    "-C",
+    "C:\\Study\\SpeedyTiltShift2022\\app\\.cxx\\Debug\\2r60cm46\\x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "cpufeatures-Debug-x86": {
+      "buildCommandComponents": [
+        "C:\\Users\\kaith\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+        "-C",
+        "C:\\Study\\SpeedyTiltShift2022\\app\\.cxx\\Debug\\2r60cm46\\x86",
+        "cpufeatures"
+      ],
+      "buildType": "debug",
+      "abi": "x86",
+      "artifactName": "cpufeatures",
+      "output": "C:\\Study\\SpeedyTiltShift2022\\app\\.cxx\\Debug\\2r60cm46\\x86\\libcpufeatures.a"
+    },
+    "native-lib-Debug-x86": {
+      "buildCommandComponents": [
+        "C:\\Users\\kaith\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+        "-C",
+        "C:\\Study\\SpeedyTiltShift2022\\app\\.cxx\\Debug\\2r60cm46\\x86",
+        "native-lib"
+      ],
+      "buildType": "debug",
+      "abi": "x86",
+      "artifactName": "native-lib",
+      "output": "C:\\Study\\SpeedyTiltShift2022\\app\\build\\intermediates\\cxx\\Debug\\2r60cm46\\obj\\x86\\libnative-lib.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {},
+  "cFileExtensions": [
+    "c"
+  ],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

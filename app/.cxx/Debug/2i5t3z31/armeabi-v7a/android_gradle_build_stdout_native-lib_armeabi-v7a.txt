@@ -1,0 +1,5 @@
+ninja: Entering directory `C:\Study\SpeedyTiltShift2022\app\.cxx\Debug\2i5t3z31\armeabi-v7a'
+[1/4] Building C object CMakeFiles/cpufeatures.dir/C_/Users/kaith/AppData/Local/Android/Sdk/ndk/21.0.6113669/sources/android/cpufeatures/cpu-features.c.o
+[2/4] Building CXX object CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o
+[3/4] Linking C static library libcpufeatures.a
+[4/4] Linking CXX shared library ..\..\..\..\build\intermediates\cxx\Debug\2i5t3z31\obj\armeabi-v7a\libnative-lib.so

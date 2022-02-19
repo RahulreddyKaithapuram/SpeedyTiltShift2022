@@ -1,0 +1,4 @@
+C:/Study/SpeedyTiltShift2022/app/.cxx/Debug/2i5t3z31/x86/CMakeFiles/cpufeatures.dir
+C:/Study/SpeedyTiltShift2022/app/.cxx/Debug/2i5t3z31/x86/CMakeFiles/native-lib.dir
+C:/Study/SpeedyTiltShift2022/app/.cxx/Debug/2i5t3z31/x86/CMakeFiles/edit_cache.dir
+C:/Study/SpeedyTiltShift2022/app/.cxx/Debug/2i5t3z31/x86/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,16 @@
+# ninja log v5
+1	11015	666916654	CMakeFiles/cpufeatures.dir/C_/Users/kaith/AppData/Local/Android/Sdk/ndk/21.0.6113669/sources/android/cpufeatures/cpu-features.c.o	ffda67656f101dd1
+8	11478	666916654	CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o	62358e70f9679677
+11075	14949	666916658	libcpufeatures.a	b3778b13e8ab5d56
+14949	17986	666916661	../../../../build/intermediates/cxx/Debug/2i5t3z31/obj/x86/libnative-lib.so	8ddc7c0fee52378f
+1	12	0	clean	8186059e81df728
+0	10	0	clean	8186059e81df728
+5	2366	666918053	CMakeFiles/cpufeatures.dir/C_/Users/kaith/AppData/Local/Android/Sdk/ndk/21.0.6113669/sources/android/cpufeatures/cpu-features.c.o	ffda67656f101dd1
+2366	2686	666918053	libcpufeatures.a	b3778b13e8ab5d56
+10	3087	666918054	CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o	62358e70f9679677
+3087	4865	666918055	../../../../build/intermediates/cxx/Debug/2i5t3z31/obj/x86/libnative-lib.so	8ddc7c0fee52378f
+0	11	0	clean	8186059e81df728
+12	2342	666918374	CMakeFiles/cpufeatures.dir/C_/Users/kaith/AppData/Local/Android/Sdk/ndk/21.0.6113669/sources/android/cpufeatures/cpu-features.c.o	ffda67656f101dd1
+2343	2514	666918374	libcpufeatures.a	b3778b13e8ab5d56
+28	2963	666918375	CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o	62358e70f9679677
+2963	4875	666918377	../../../../build/intermediates/cxx/Debug/2i5t3z31/obj/x86/libnative-lib.so	8ddc7c0fee52378f

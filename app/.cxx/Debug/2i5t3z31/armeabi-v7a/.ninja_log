@@ -1,0 +1,8 @@
+# ninja log v5
+0	10	0	clean	8186059e81df728
+0	11	0	clean	8186059e81df728
+6	2687	666918047	CMakeFiles/cpufeatures.dir/C_/Users/kaith/AppData/Local/Android/Sdk/ndk/21.0.6113669/sources/android/cpufeatures/cpu-features.c.o	ded7724d4d4369f4
+1	3155	666918048	CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o	c54f13d1111ecbe9
+2690	3429	666918048	libcpufeatures.a	f8b0b5400e562d98
+3429	5898	666918051	../../../../build/intermediates/cxx/Debug/2i5t3z31/obj/armeabi-v7a/libnative-lib.so	a61dd89b08178339
+0	41	0	clean	8186059e81df728

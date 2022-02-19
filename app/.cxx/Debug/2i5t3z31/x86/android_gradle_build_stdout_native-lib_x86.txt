@@ -1,0 +1,2 @@
+ninja: Entering directory `C:\Study\SpeedyTiltShift2022\app\.cxx\Debug\2i5t3z31\x86'
+ninja: no work to do.
