@@ -1,6 +1,10 @@
 package edu.asu.ame.meteor.speedytiltshift2022;
 
 import android.graphics.Bitmap;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * Author : Kaithapuram Rahul Reddy, Hemanth Gangaraju, Sai Divya Nallapaneni, Ramya Sree Basani
@@ -8,7 +12,7 @@ import android.graphics.Bitmap;
  * This class holds the logic to perform Gaussian blur algorithm in JAVA and acts as an entry point for NEON and C++ implementations
  * */
 public class SpeedyTiltShift {
-
+    private static final Logger logger = Logger.getLogger(String.valueOf(SpeedyTiltShift.class));
     static {
         System.loadLibrary("native-lib");
     }
@@ -18,9 +22,9 @@ public class SpeedyTiltShift {
     private static double[] GaussianBlurKernel(double sigma){
         if(sigma < 0.6)
             return new double[0];
-        double radius = Math.ceil(2*sigma);
+        double radius = Math.ceil(2*sigma); // calculate the radius of kernel
 
-        int kernelSize = (int)(Math.ceil(radius)*2) + 1;
+        int kernelSize = (int)(Math.ceil(radius)*2) + 1; // calculate kerb]nel size
         double[] kernelVector = new double[kernelSize];
 
         int wholeRadius = (int)Math.ceil(radius);
@@ -34,7 +38,7 @@ public class SpeedyTiltShift {
             double secondTerm = -1* k*k/(2*sigmaSquare);
             double weight = Math.exp(secondTerm)*firstTerm;
 
-            kernelVector[k+wholeRadius] = weight;
+            kernelVector[k+wholeRadius] = weight;  // creating a kernel vector with the said method
         }
 
         return kernelVector;
@@ -42,21 +46,22 @@ public class SpeedyTiltShift {
 
     /*Method to calculate sigma*/
     private static double calculateSigma(int low, int high, int y, float sigma, boolean isFarSigma){
-        return  sigma * (isFarSigma ? (high - y) : (y - low))/(high - low);
+        return  sigma * (isFarSigma ? (high - y) : (y - low))/(high - low);  // calculate sigma values according to the pixel position
     }
 
     /*Method to perform vertical convolution with varying sigma for every row*/
     private static void VerticalConvolution(int start, int stop, int[] pixelsIn, int[] pixelsOut, int width, double[][] gaussianKernelVectors){
+        int lowIndex = start/width;
+        int highIndex = stop/width;
         for (int i=start; i<=start+width; i++){
             for(int j = i; j < stop; j=j+width) {
                 float bluePixel = 0;
-                float greenPixel = 0;
+                float greenPixel = 0;           // creating duplicate pixel values to operate on
                 float redPixel = 0;
 
                 int count = -1;
                 int pixelVal;
-
-                double[] gaussianKernelVector = gaussianKernelVectors[j/width];
+                double[] gaussianKernelVector = gaussianKernelVectors[j/width];   // construct gaussian kernel for the given input pixels
 
                 if(gaussianKernelVector.length == 0){
                     pixelsOut[j] = pixelsIn[j];
@@ -68,8 +73,8 @@ public class SpeedyTiltShift {
                 for(int k = j - rangeToBeConvoluted; k <= j + rangeToBeConvoluted; k = k + width) {
                     count++;
                     try{
-                        pixelVal = pixelsIn[k];
-                    }catch (ArrayIndexOutOfBoundsException a){
+                        pixelVal = pixelsIn[k];            /// performing vertical convolution according to the formula -
+                    }catch (ArrayIndexOutOfBoundsException a){     // q(y, x) = G(-r)*p(y-r, x), + ... + G(0)*p(y, x),+ ... + G(r)*p(y+r, x)
                         pixelVal = 0;
                     }
 
@@ -89,7 +94,7 @@ public class SpeedyTiltShift {
                 int combinedGreen = (int) greenPixel;
                 int combinedBlue = (int) bluePixel;
                 pixelsOut[j] = (combinedAlpha & 0xff) << 24 | (combinedRed & 0xff) << 16 | (combinedGreen & 0xff) << 8 | (combinedBlue & 0xff);
-            }
+            }                                                       // combining the convoluted R,G,B value into the pixel value
         }
     }
 
@@ -114,8 +119,8 @@ public class SpeedyTiltShift {
                 int pixelVal;
 
                 for(int k = -radius; k <= radius; k++) {
-                    int pixelIndex = j + k;
-                    int vectorIndex = k + radius;
+                    int pixelIndex = j + k;                                                     /// performing vertical convolution according to the formula -
+                    int vectorIndex = k + radius;                                               ///P(y, x) = G(-r)*q(y, x-r), + ... + G(0)*q(y, x),+ ... + G(r)*q(y, x+r)
 
                     if(pixelIndex >= 0 && pixelIndex < pixelRight && pixelIndex < totalPixels){
                         pixelVal = pixelsIn[pixelIndex];
@@ -252,6 +257,7 @@ public class SpeedyTiltShift {
     }
 
 
+    public static long Java_time_measure = 0;
 
     public static Bitmap tiltshift_java(Bitmap input, float sigma_far, float sigma_near, int a0, int a1, int a2, int a3){
         Bitmap outBmp = Bitmap.createBitmap(input.getWidth(), input.getHeight(), Bitmap.Config.ARGB_8888);
@@ -276,6 +282,7 @@ public class SpeedyTiltShift {
         /* Image dimensions */
         final int imageWidth = input.getWidth();
         final int imageHeight = input.getHeight();
+
         final int totalPixels = input.getWidth()*input.getHeight();
 
         /* Arrays to keep track of image pixels */
@@ -284,7 +291,7 @@ public class SpeedyTiltShift {
         final int[] pixelsOut = new int[totalPixels];
 
         input.getPixels(pixelsIn,0,input.getWidth(),0,0,input.getWidth(),input.getHeight());
-
+        long startTime = System.currentTimeMillis();
         /* 0-a0 section Sigma1 blur*/
         Convolution(0,(a0)*imageWidth,pixelsIn,pixelsIntermediate,pixelsOut,imageHeight,imageWidth,totalPixels,sigma_far,true, true);
         /* a0-a1 section Variable Sigma Blur*/
@@ -297,33 +304,52 @@ public class SpeedyTiltShift {
 
         /* a3-end section - Sigma2 Blur*/
         Convolution((a3)*imageWidth,imageHeight*imageWidth,pixelsIn,pixelsIntermediate,pixelsOut,imageHeight,imageWidth,totalPixels,sigma_near,false,true);
+        long stopTime = System.currentTimeMillis(); // stop time count for execution
+        Java_time_measure = stopTime - startTime;
+        logger.log(Level.INFO,"Execution Time Java- "+Java_time_measure); // display execution time in run log file
 
-
-        outBmp.setPixels(pixelsOut,0,input.getWidth(),0,0,input.getWidth(),input.getHeight());
+        outBmp.setPixels(pixelsOut,0,input.getWidth(),0,0,input.getWidth(),input.getHeight()); // transform pixel values to bitmap
 
         return outBmp;
     }
+    public static long Cpp_time_measure = 0;
+
     public static Bitmap tiltshift_cpp(Bitmap input, float sigma_far, float sigma_near, int a0, int a1, int a2, int a3){
         Bitmap outBmp = Bitmap.createBitmap(input.getWidth(), input.getHeight(), Bitmap.Config.ARGB_8888);
+        /* Image dimensions */
         int[] pixels = new int[input.getHeight()*input.getWidth()];
         int[] pixelsOut = new int[input.getHeight()*input.getWidth()];
         input.getPixels(pixels,0,input.getWidth(),0,0,input.getWidth(),input.getHeight());
-
+        long startTimeCpp = System.currentTimeMillis();
+        // call the Cppnative function in native-lib.cpp file
         tiltshiftcppnative(pixels,pixelsOut,input.getWidth(),input.getHeight(),sigma_far,sigma_near,a0,a1,a2,a3);
-
+        long stopTimeCpp = System.currentTimeMillis();
+        Cpp_time_measure = stopTimeCpp - startTimeCpp ;
+        logger.log(Level.INFO,"Execution Time CPP- "+Cpp_time_measure);
         outBmp.setPixels(pixelsOut,0,input.getWidth(),0,0,input.getWidth(),input.getHeight());
         return outBmp;
+
     }
+    public static long Neon_time_measure = 0;
+
     public static Bitmap tiltshift_neon(Bitmap input, float sigma_far, float sigma_near, int a0, int a1, int a2, int a3){
         Bitmap outBmp = Bitmap.createBitmap(input.getWidth(), input.getHeight(), Bitmap.Config.ARGB_8888);
+        /* Image dimensions */
         int[] pixels = new int[input.getHeight()*input.getWidth()];
         int[] pixelsOut = new int[input.getHeight()*input.getWidth()];
         input.getPixels(pixels,0,input.getWidth(),0,0,input.getWidth(),input.getHeight());
-
+        long startTimeNeon = System.currentTimeMillis();
+        // call the Neonnative function in native-lib.cpp file
         tiltshiftneonnative(pixels,pixelsOut,input.getWidth(),input.getHeight(),sigma_far,sigma_near,a0,a1,a2,a3);
-
+        long stopTimeNeon = System.currentTimeMillis();
+        Neon_time_measure = stopTimeNeon - startTimeNeon ;
+        logger.log(Level.INFO,"Execution Time Neon- "+Neon_time_measure);
         outBmp.setPixels(pixelsOut,0,input.getWidth(),0,0,input.getWidth(),input.getHeight());
         return outBmp;
+
+
+
+
     }
 
 
@@ -335,3 +361,4 @@ public class SpeedyTiltShift {
     public static native int tiltshiftneonnative(int[] inputPixels, int[] outputPixels, int width, int height, float sigma_far, float sigma_near, int a0, int a1, int a2, int a3);
 
 }
+

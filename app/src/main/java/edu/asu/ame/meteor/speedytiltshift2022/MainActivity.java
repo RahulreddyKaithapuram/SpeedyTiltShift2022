@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,14 +32,26 @@ public class MainActivity extends AppCompatActivity {
     public void javaPress(View view){
         Bitmap outbmp = SpeedyTiltShift.tiltshift_java(bmp,s0f*sigma_range,s1f*sigma_range,(int)(a0f*bmp.getHeight()),(int)(a1f*bmp.getHeight()),(int)(a2f*bmp.getHeight()),(int)(a3f*bmp.getHeight()));
         imageView.setImageBitmap(outbmp);
+        long Java_time_measure = SpeedyTiltShift.Java_time_measure;
+        String time = "Java Measured Time (ms): "+Java_time_measure;
+        TextView textview = findViewById(R.id.textBox);
+        textview.setText(time);
     }
     public void cppPress(View view){
         Bitmap outbmp = SpeedyTiltShift.tiltshift_cpp(bmp,s0f*sigma_range,s1f*sigma_range,(int)(a0f*bmp.getHeight()),(int)(a1f*bmp.getHeight()),(int)(a2f*bmp.getHeight()),(int)(a3f*bmp.getHeight()));
         imageView.setImageBitmap(outbmp);
+        long Cpp_time_measure = SpeedyTiltShift.Cpp_time_measure;
+        String time = "C++ Measured Time (ms): "+Cpp_time_measure;
+        TextView textview = findViewById(R.id.textBox);
+        textview.setText(time);
     }
     public void neonPress(View view){
         Bitmap outbmp = SpeedyTiltShift.tiltshift_neon(bmp,s0f*sigma_range,s1f*sigma_range,(int)(a0f*bmp.getHeight()),(int)(a1f*bmp.getHeight()),(int)(a2f*bmp.getHeight()),(int)(a3f*bmp.getHeight()));
         imageView.setImageBitmap(outbmp);
+        long Neon_time_measure = SpeedyTiltShift.Neon_time_measure;
+        String time = "Neon Measured Time (ms): "+Neon_time_measure;
+        TextView textview = findViewById(R.id.textBox);
+        textview.setText(time);
     }
 
     private void setupImg(int imgId){
